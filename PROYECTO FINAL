@@ -1,0 +1,136 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define PUEBLOS 100
+#define BEBIDAS 8
+
+const char* opcionesBebidas[BEBIDAS] = {
+    "Vino",
+    "Refresco",
+    "Cerveza",
+    "Agua",
+    "Tequila",
+    "Jugo",
+    "Whisky",
+    "Ron"
+};
+
+void mostrarMenuBebidas() {
+    printf("\nElige la opción de bebida:\n");
+    for(int i = 0; i < BEBIDAS; i++) {
+        printf("%d. %s\n", i, opcionesBebidas[i]);
+    }
+}
+
+void inicializarMatriz(int matriz[PUEBLOS][BEBIDAS]) {
+    for(int i = 0; i < PUEBLOS; i++) {
+        for(int j = 0; j < BEBIDAS; j++) {
+            matriz[i][j] = 0;
+        }
+    }
+    printf("Matriz inicializada.\n");
+}
+
+void llenarDatos(int matriz[PUEBLOS][BEBIDAS]) {
+    for(int i = 0; i < PUEBLOS; i++) {
+        int bebida;
+        printf("\nPueblo %d:\n", i);
+        mostrarMenuBebidas();
+        printf("Ingrese tipo de bebida (-1 para ir al siguiente pueblo): ");
+        scanf("%d", &bebida);
+        
+        while(bebida != -1) {
+            if(bebida < 0 || bebida >= BEBIDAS) {
+                printf("Error: Bebida inválida.\n");
+            } else {
+                int litros;
+                printf("Litros consumidos: ");
+                scanf("%d", &litros);
+                matriz[i][bebida] += litros;
+            }
+            mostrarMenuBebidas();
+            printf("Ingrese otra bebida (-1 para ir al siguiente pueblo): ");
+            scanf("%d", &bebida);
+        }
+    }
+}
+
+void bebidaMasConsumida(int matriz[PUEBLOS][BEBIDAS]) {
+    int total[BEBIDAS] = {0};
+
+    for (int j = 0; j < BEBIDAS; j++) {
+        for (int i = 0; i < PUEBLOS; i++) {
+            total[j] += matriz[i][j];
+        }
+    }
+
+    int max = total[0], bebida = 0;
+    for (int i = 1; i < BEBIDAS; i++) {
+        if (total[i] > max) {
+            max = total[i];
+            bebida = i;
+        }
+    }
+
+    printf("\n👉 La bebida más consumida es **%s** con %d litros.\n", opcionesBebidas[bebida], max);
+}
+
+void bebidaAlcoholicaMasConsumida(int matriz[PUEBLOS][BEBIDAS]) {
+    int total[BEBIDAS] = {0};
+
+    for (int j = 0; j < BEBIDAS; j++) {
+        if (j != 1 && j != 5) {  // ignorar Refresco (1) y Jugo (5)
+            for (int i = 0; i < PUEBLOS; i++) {
+                total[j] += matriz[i][j];
+            }
+        }
+    }
+
+    int max = 0, bebida = -1;
+    for (int i = 0; i < BEBIDAS; i++) {
+        if (i != 1 && i != 5 && total[i] > max) {
+            max = total[i];
+            bebida = i;
+        }
+    }
+
+    if (bebida != -1)
+        printf("👉 La bebida alcohólica más consumida es **%s** con %d litros.\n", opcionesBebidas[bebida], max);
+    else
+        printf("No hay bebidas alcohólicas registradas.\n");
+}
+
+void puebloMasAlcoholizado(int matriz[PUEBLOS][BEBIDAS]) {
+    int totalPorPueblo[PUEBLOS] = {0};
+
+    for (int i = 0; i < PUEBLOS; i++) {
+        for (int j = 0; j < BEBIDAS; j++) {
+            if (j != 1 && j != 5) { // Ignorar Refresco y Jugo
+                totalPorPueblo[i] += matriz[i][j];
+            }
+        }
+    }
+
+    int max = totalPorPueblo[0], pueblo = 0;
+    for (int i = 1; i < PUEBLOS; i++) {
+        if (totalPorPueblo[i] > max) {
+            max = totalPorPueblo[i];
+            pueblo = i;
+        }
+    }
+
+    printf("👉 El pueblo que más alcohol consume es el pueblo %d con %d litros.\n", pueblo, max);
+}
+
+int main() {
+    int consumo[PUEBLOS][BEBIDAS];
+
+    inicializarMatriz(consumo);
+    llenarDatos(consumo);
+    
+    bebidaMasConsumida(consumo);
+    bebidaAlcoholicaMasConsumida(consumo);
+    puebloMasAlcoholizado(consumo);
+
+    return 0;
+}
