@@ -72,7 +72,7 @@ void bebidaMasConsumida(int matriz[PUEBLOS][BEBIDAS]) {
         }
     }
 
-    printf("\n👉 La bebida más consumida es **%s** con %d litros.\n", opcionesBebidas[bebida], max);
+    printf("\nLa bebida más consumida es **%s** con %d litros.\n", opcionesBebidas[bebida], max);
 }
 
 void bebidaAlcoholicaMasConsumida(int matriz[PUEBLOS][BEBIDAS]) {
@@ -95,7 +95,7 @@ void bebidaAlcoholicaMasConsumida(int matriz[PUEBLOS][BEBIDAS]) {
     }
 
     if (bebida != -1)
-        printf("👉 La bebida alcohólica más consumida es **%s** con %d litros.\n", opcionesBebidas[bebida], max);
+        printf("La bebida alcohólica más consumida es **%s** con %d litros.\n", opcionesBebidas[bebida], max);
     else
         printf("No hay bebidas alcohólicas registradas.\n");
 }
@@ -119,7 +119,7 @@ void puebloMasAlcoholizado(int matriz[PUEBLOS][BEBIDAS]) {
         }
     }
 
-    printf("👉 El pueblo que más alcohol consume es el pueblo %d con %d litros.\n", pueblo, max);
+    printf("El pueblo que más mas consume alchol es el  %d con %d litros.\n", pueblo, max);
 }
 
 int main() {
